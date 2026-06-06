@@ -1,1111 +1,297 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cli-MATE — Compare your climate impact with friends</title>
+    <title>cli-MATE — City living, made greener</title>
+    <meta
+      name="description"
+      content="cli-MATE is the friendly way to lower your carbon footprint in the city. Track how you get around, keep a daily streak, take on challenges with friends, and watch your emissions saved add up."
+    />
+    <link rel="icon" href="elements/CliMateLogo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --starbucks-green: #0b6b50;
-        --green-accent: #2b8d68;
-        --house-green: #12312a;
-        --green-light: #dfece4;
-        --cream: #f6f2eb;
-        --ceramic: #ece6dd;
-        --white: #ffffff;
-        --text: rgba(12, 24, 20, 0.92);
-        --text-soft: rgba(12, 24, 20, 0.62);
-        --shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05);
-        --radius-card: 20px;
-        --radius-pill: 999px;
-        --max-width: 1180px;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        font-size: 62.5%;
-        color-scheme: light;
-      }
-
-      body {
-        margin: 0;
-        font-family: "Manrope", Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(circle at top right, rgba(43, 141, 104, 0.12), transparent 26%),
-          radial-gradient(circle at 14% 10%, rgba(18, 49, 42, 0.08), transparent 22%),
-          linear-gradient(180deg, #f9f6f0 0%, var(--cream) 24%, #f8faf7 100%);
-        letter-spacing: 0;
-        line-height: 1.5;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(2.4rem);
-        transition:
-          opacity 0.7s ease,
-          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        will-change: opacity, transform;
-      }
-
-      .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .page {
-        min-height: 100vh;
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        backdrop-filter: blur(18px);
-        background: rgba(246, 242, 235, 0.86);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      }
-
-      .topbar-inner,
-      .section,
-      .footer-inner {
-        width: min(var(--max-width), calc(100% - 3.2rem));
-        margin: 0 auto;
-      }
-
-      .topbar-inner {
-        min-height: 8rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
-        font-weight: 700;
-        color: var(--house-green);
-      }
-
-      .brand-mark {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 1rem;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, #2f9c73, var(--starbucks-green));
-        color: var(--white);
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-
-      .brand-mark img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .nav {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 2rem;
-        color: var(--text-soft);
-        font-size: 1.4rem;
-        font-weight: 600;
-      }
-
-      .nav .pill {
-        padding: 1rem 1.5rem;
-        border-radius: var(--radius-pill);
-        border: 1px solid rgba(0, 0, 0, 0.14);
-        background: rgba(255, 255, 255, 0.75);
-      }
-
-      .hero {
-        position: relative;
-        padding: 5.6rem 0 4.8rem;
-        overflow: hidden;
-        isolation: isolate;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(180deg, rgba(246, 242, 235, 0.12) 0%, rgba(246, 242, 235, 0.5) 48%, rgba(246, 242, 235, 0.94) 100%),
-          url("elements/treesback.png") center center / cover no-repeat;
-        transform: scale(1.04);
-        z-index: -2;
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.28), transparent 22%),
-          linear-gradient(180deg, rgba(18, 49, 42, 0.06) 0%, rgba(18, 49, 42, 0.16) 100%);
-        z-index: -1;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 0.8rem 1.2rem;
-        border-radius: var(--radius-pill);
-        background: rgba(43, 141, 104, 0.1);
-        color: var(--starbucks-green);
-        font-size: 1.3rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        backdrop-filter: blur(8px);
-      }
-
-      h1 {
-        margin: 1.4rem 0 1.4rem;
-        font-size: clamp(4.4rem, 6vw, 7.6rem);
-        line-height: 0.9;
-        letter-spacing: -0.05em;
-        color: #11251f;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-        max-width: 10ch;
-      }
-
-      .lead {
-        font-size: clamp(1.7rem, 1.7vw, 2rem);
-        line-height: 1.65;
-        letter-spacing: 0;
-        color: rgba(17, 37, 31, 0.82);
-        max-width: 56rem;
-      }
-
-      .cta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 2.6rem;
-      }
-
-      .button {
-        appearance: none;
-        border: none;
-        border-radius: var(--radius-pill);
-        padding: 1.2rem 1.8rem;
-        font-size: 1.5rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      }
-
-      .button:active {
-        transform: scale(0.96);
-      }
-
-      .button.primary {
-        background: linear-gradient(135deg, var(--green-accent), var(--starbucks-green));
-        color: var(--white);
-        box-shadow: 0 12px 24px rgba(0, 117, 74, 0.2);
-      }
-
-      .button.secondary {
-        background: rgba(255, 255, 255, 0.7);
-        color: var(--house-green);
-        border: 1px solid rgba(30, 57, 50, 0.18);
-      }
-
-      .button.ghost {
-        background: transparent;
-        color: var(--starbucks-green);
-        border: 1px solid rgba(0, 98, 65, 0.28);
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.6rem;
-      }
-
-      .stat-card,
-      .feature-card,
-      .section-card {
-        background: rgba(255, 255, 255, 0.88);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow);
-      }
-
-      .stat-card {
-        padding: 2rem;
-        min-height: 14rem;
-      }
-
-      .stat-card strong {
-        display: block;
-        font-size: 3.6rem;
-        line-height: 1;
-        color: var(--house-green);
-      }
-
-      .stat-card span {
-        display: block;
-        margin-top: 0.8rem;
-        font-size: 1.4rem;
-        color: var(--text-soft);
-        line-height: 1.5;
-      }
-
-      .preview {
-        position: relative;
-        min-height: 58rem;
-        border-radius: 3.2rem;
-        overflow: hidden;
-        background:
-          linear-gradient(180deg, rgba(18, 49, 42, 0.08), rgba(43, 141, 104, 0.14)),
-          linear-gradient(135deg, #e2efe7 0%, #f5f1e8 52%, #e5f0ea 100%);
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        box-shadow: 0 24px 40px rgba(0, 0, 0, 0.08);
-      }
-
-      .city {
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 44%;
-        background:
-          linear-gradient(180deg, rgba(18, 49, 42, 0) 0%, rgba(18, 49, 42, 0.02) 20%, rgba(18, 49, 42, 0.14) 100%),
-          linear-gradient(90deg, #12312a 0 7%, #23463e 7% 13%, #102821 13% 19%, #264b43 19% 28%, #12312a 28% 37%, #2b584e 37% 44%, #113029 44% 52%, #264b43 52% 60%, #12312a 60% 69%, #2d5b51 69% 77%, #113029 77% 86%, #23463e 86% 93%, #102821 93% 100%);
-        clip-path: polygon(0 100%, 0 58%, 5% 58%, 5% 42%, 10% 42%, 10% 65%, 16% 65%, 16% 34%, 22% 34%, 22% 54%, 28% 54%, 28% 16%, 34% 16%, 34% 60%, 41% 60%, 41% 26%, 48% 26%, 48% 68%, 56% 68%, 56% 38%, 63% 38%, 63% 18%, 71% 18%, 71% 58%, 78% 58%, 78% 28%, 85% 28%, 85% 63%, 92% 63%, 92% 40%, 100% 40%, 100% 100%);
-      }
-
-      .floating-card {
-        position: absolute;
-        left: 2.2rem;
-        right: 2.2rem;
-        top: 2.2rem;
-        border-radius: 2.2rem;
-        padding: 2.2rem;
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: var(--shadow);
-      }
-
-      .preview-brand {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.2rem;
-      }
-
-      .preview-brand img {
-        width: 4.8rem;
-        height: 4.8rem;
-        border-radius: 1.2rem;
-        object-fit: cover;
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-      }
-
-      .preview-brand span {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: var(--house-green);
-      }
-
-      .floating-card h2 {
-        margin: 0;
-        font-size: 2.1rem;
-        color: var(--house-green);
-      }
-
-      .floating-card p {
-        margin: 0.7rem 0 0;
-        font-size: 1.45rem;
-        line-height: 1.55;
-        color: var(--text-soft);
-      }
-
-      .mini-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1.1rem;
-        margin-top: 1.8rem;
-      }
-
-      .mini {
-        background: linear-gradient(180deg, #f7fbf8, #edf7f1);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: 1.2rem;
-        padding: 1.3rem;
-      }
-
-      .mini b {
-        display: block;
-        font-size: 1.6rem;
-        color: var(--starbucks-green);
-      }
-
-      .mini span {
-        display: block;
-        margin-top: 0.4rem;
-        font-size: 1.2rem;
-        color: var(--text-soft);
-      }
-
-      .section {
-        padding: 2.2rem 0 5.4rem;
-      }
-
-      .section-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: end;
-        justify-content: space-between;
-        gap: 1.2rem;
-        margin-bottom: 2rem;
-      }
-
-      .section-header h3 {
-        margin: 0;
-        font-size: 2.8rem;
-        line-height: 1.05;
-        color: var(--house-green);
-      }
-
-      .section-header p {
-        margin: 0;
-        max-width: 58rem;
-        font-size: 1.5rem;
-        line-height: 1.65;
-        letter-spacing: 0;
-        color: var(--text-soft);
-      }
-
-      .feature-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0;
-        border-top: 1px solid rgba(30, 57, 50, 0.12);
-      }
-
-      .feature-card {
-        display: grid;
-        grid-template-columns: 5rem minmax(0, 1fr);
-        column-gap: 2rem;
-        row-gap: 0.6rem;
-        align-items: start;
-        padding: 2.8rem 0;
-        border-bottom: 1px solid rgba(30, 57, 50, 0.12);
-        background: transparent;
-        border-radius: 0;
-        box-shadow: none;
-      }
-
-      .feature-copy {
-        grid-column: 2;
-        display: grid;
-        gap: 0.6rem;
-        min-width: 0;
-      }
-
-      .feature-icon {
-        width: 4.4rem;
-        height: 4.4rem;
-        border-radius: 1.4rem;
-        display: grid;
-        place-items: center;
-        background: rgba(43, 141, 104, 0.1);
-        color: var(--green-accent);
-        flex-shrink: 0;
-      }
-
-      .feature-icon svg,
-      .mini-icon svg {
-        width: 2rem;
-        height: 2rem;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.8;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-
-      .mini-icon {
-        width: 3.6rem;
-        height: 3.6rem;
-        border-radius: 1.1rem;
-        display: grid;
-        place-items: center;
-        background: rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.92);
-        flex-shrink: 0;
-      }
-
-      .mini-icon svg {
-        width: 1.8rem;
-        height: 1.8rem;
-      }
-
-      .feature-card h4 {
-        margin: 0;
-        font-size: 2rem;
-        color: var(--house-green);
-      }
-
-      .feature-card p {
-        margin: 0;
-        font-size: 1.5rem;
-        line-height: 1.7;
-        letter-spacing: 0;
-        color: var(--text-soft);
-        max-width: 58rem;
-      }
-
-      .band {
-        margin-top: 0.8rem;
-        background: var(--house-green);
-        color: var(--white);
-        padding: 5.4rem 0;
-      }
-
-      .band-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(32rem, 42rem);
-        gap: 4.4rem;
-        align-items: start;
-      }
-
-      .band h3 {
-        margin: 0 0 1.2rem;
-        font-size: clamp(3rem, 4vw, 4.8rem);
-        line-height: 1;
-      }
-
-      .band p {
-        margin: 0;
-        font-size: 1.7rem;
-        line-height: 1.65;
-        letter-spacing: 0;
-        color: rgba(255, 255, 255, 0.74);
-        max-width: 54rem;
-      }
-
-      .band-list {
-        display: grid;
-        gap: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.16);
-        padding-left: 2.4rem;
-      }
-
-      .band-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 1.2rem;
-        padding: 2rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        background: transparent;
-        border-radius: 0;
-        border-top: 0;
-        border-right: 0;
-        border-left: 0;
-      }
-
-      .band-item strong {
-        display: block;
-        font-size: 1.6rem;
-      }
-
-      .band-item span {
-        display: block;
-        margin-top: 0.4rem;
-        font-size: 1.4rem;
-        line-height: 1.55;
-        letter-spacing: 0;
-        color: rgba(255, 255, 255, 0.72);
-      }
-
-      .roadmap {
-        position: relative;
-        display: grid;
-        gap: 0;
-        padding-left: 2.4rem;
-        border-left: 1px solid rgba(30, 57, 50, 0.12);
-      }
-
-      .section-card {
-        display: grid;
-        grid-template-columns: 6rem minmax(0, 1fr);
-        column-gap: 2rem;
-        row-gap: 0.6rem;
-        padding: 2.4rem 0;
-        background: transparent;
-        border-radius: 0;
-        box-shadow: none;
-        border: 0;
-        border-bottom: 1px solid rgba(30, 57, 50, 0.12);
-      }
-
-      .section-copy {
-        grid-column: 2;
-        display: grid;
-        gap: 0.6rem;
-        min-width: 0;
-      }
-
-      .section-card h4 {
-        margin: 0;
-        font-size: 2rem;
-        color: var(--house-green);
-      }
-
-      .section-card ul {
-        margin: 0;
-        padding-left: 1.8rem;
-        color: var(--text-soft);
-        font-size: 1.45rem;
-        line-height: 1.65;
-        letter-spacing: 0;
-      }
-
-      .closing {
-        padding: 4.4rem 0 7.4rem;
-      }
-
-      .closing-card {
-        border-radius: 2.2rem;
-        padding: 3.4rem 0 0;
-        background: linear-gradient(135deg, rgba(0, 98, 65, 0.96), rgba(30, 57, 50, 0.96));
-        color: var(--white);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(28rem, 36rem);
-        gap: 2.4rem;
-        align-items: start;
-      }
-
-      .closing-card h3 {
-        margin: 0 0 1rem;
-        font-size: clamp(3.2rem, 4vw, 5rem);
-        line-height: 0.96;
-      }
-
-      .closing-card p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.74);
-        font-size: 1.7rem;
-        line-height: 1.65;
-        letter-spacing: 0;
-        max-width: 56rem;
-      }
-
-      .impact-box {
-        background: rgba(255, 255, 255, 0.08);
-        border-left: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 0;
-        padding: 0 0 0 2.2rem;
-      }
-
-      .impact-box strong {
-        display: block;
-        font-size: 4.4rem;
-        line-height: 1;
-      }
-
-      .impact-box span {
-        display: block;
-        margin-top: 0.8rem;
-        color: rgba(255, 255, 255, 0.72);
-        font-size: 1.5rem;
-        line-height: 1.55;
-        letter-spacing: 0;
-      }
-
-      .footer {
-        padding: 1.6rem 0 3rem;
-        color: var(--text-soft);
-        font-size: 1.3rem;
-      }
-
-      .footer-inner {
-        border-top: 1px solid rgba(0, 0, 0, 0.07);
-        padding-top: 1.6rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1.2rem;
-      }
-
-      @media (max-width: 980px) {
-        .hero-grid,
-        .band-grid,
-        .closing-card {
-          grid-template-columns: 1fr;
-        }
-
-        .stats-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .band-list,
-        .roadmap,
-        .impact-box {
-          padding-left: 0;
-          border-left: 0;
-        }
-
-        .feature-card,
-        .section-card {
-          grid-template-columns: 4.4rem minmax(0, 1fr);
-        }
-
-        .feature-copy,
-        .section-copy {
-          grid-column: 2;
-        }
-      }
-
-      @media (max-width: 680px) {
-        .topbar-inner,
-        .section,
-        .footer-inner {
-          width: min(var(--max-width), calc(100% - 2rem));
-        }
-
-        .topbar-inner {
-          min-height: 7rem;
-        }
-
-        .nav {
-          display: none;
-        }
-
-        .hero {
-          padding-top: 3.4rem;
-        }
-
-        .hero::before {
-          background-position: center top;
-          transform: none;
-        }
-
-        .feature-grid,
-        .roadmap,
-        .stats-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .feature-card,
-        .section-card {
-          grid-template-columns: 1fr;
-        }
-
-        .feature-copy,
-        .section-copy {
-          grid-column: auto;
-          padding-left: 0;
-        }
-
-        .feature-icon,
-        .mini-icon {
-          margin-bottom: 0.2rem;
-        }
-
-        .preview {
-          min-height: 50rem;
-        }
-
-        .mini-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .closing-card {
-          padding: 2.2rem;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          scroll-behavior: auto !important;
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-
-        .reveal {
-          opacity: 1;
-          transform: none;
-        }
-      }
-    </style>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/landing.css" />
   </head>
-  <body>
-    <div class="page">
-      <header class="topbar">
-        <div class="topbar-inner">
-          <a class="brand" href="#top">
-            <div class="brand-mark"><img src="elements/CliMateLogo.png" alt="cli-MATE logo" /></div>
-            <div>
-              <div style="font-size: 1.8rem; line-height: 1;">cli-MATE</div>
-              <div style="font-size: 1.2rem; color: rgba(0, 0, 0, 0.52); font-weight: 600; margin-top: 0.3rem;">Climate tracking for city crews</div>
+  <body id="top">
+    <span id="nav-sentinel" aria-hidden="true"></span>
+
+    <!-- ===================== INTEGRATED NAV (transparent over hero) ===================== -->
+    <header class="topbar">
+      <div class="section topbar-inner">
+        <a class="brand" href="#top" aria-label="cli-MATE home">
+          <span class="brand-mark"><img src="elements/CliMateLogo.png" alt="" /></span>
+          <span class="brand-name">cli-MATE</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#how">How it works</a>
+          <a href="#score">Your score</a>
+          <a href="#friends">Friends</a>
+          <a class="btn btn--primary" href="#join">Get started</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================== HERO (full-bleed, green-city photo) ===================== -->
+      <section class="hero">
+        <!-- Photo layer: failed load falls back to the green gradient beneath it -->
+        <div class="hero__photo" aria-hidden="true">
+          <img
+            src="https://images.unsplash.com/photo-1764344558503-0579b0b0cb73?auto=format&fit=crop&w=1600&q=70"
+            alt=""
+            data-fallback
+          />
+        </div>
+        <div class="hero__scrim" aria-hidden="true"></div>
+
+        <div class="section hero-grid">
+          <div class="reveal" data-reveal>
+            <span class="eyebrow">Urban sustainability, made fun</span>
+            <h1>City living,<br />made greener.</h1>
+            <p class="lead">
+              cli-MATE turns the way you move through your city into a daily streak. Track your trips,
+              take on challenges with friends, and watch the carbon you save add up — one small choice
+              at a time.
+            </p>
+            <div class="cta-row" id="join">
+              <a class="btn btn--on-dark-fill" href="#how">Get started</a>
+              <a class="btn btn--on-dark-outline" href="#score">See how it works</a>
             </div>
+            <div class="hero-trust">
+              <div class="stat"><b>4</b><span>ways to get around, tracked</span></div>
+              <div class="stat"><b>Daily</b><span>score &amp; streak</span></div>
+              <div class="stat"><b>Together</b><span>with your friends</span></div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal>
+            <!-- HERO DEMO SLOT — replace inner content later with an animated, non-interactive demo.
+                 Contract: keep this #hero-demo wrapper, its aspect-ratio, border-radius, and aria-label.
+                 The animation must fill 100% of #hero-demo absolutely and MUST NOT change page layout.
+                 Add demo styles in css/hero-demo.css and (if needed) js/hero-demo.js (defer).
+                 MUST honor prefers-reduced-motion and fall back to the static card below. -->
+            <div
+              id="hero-demo"
+              class="hero-demo"
+              role="img"
+              aria-label="cli-MATE app preview: a daily emission score, streak, and carbon saved this week"
+              data-demo-slot
+            >
+              <span class="hero-demo__note">Preview</span>
+              <div class="demo-card">
+                <div class="demo-score">
+                  <div class="score-ring" style="--pct: 68">
+                    <span style="text-align: center"><b>68</b><br /><span>today</span></span>
+                  </div>
+                  <div class="meta">
+                    <h4>Daily score</h4>
+                    <p>Lower than 84% of your usual days. Nice one.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-row">
+                <div class="demo-pill"><b>🔥 12</b><span>day streak</span></div>
+                <div class="demo-pill"><b>5.4 kg</b><span>saved this week</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== MARQUEE (impact words) ===================== -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span class="marquee__item">Streaks</span>
+          <span class="marquee__item">Challenges</span>
+          <span class="marquee__item">CO₂ Saved</span>
+          <span class="marquee__item">Friends</span>
+          <span class="marquee__item">Daily Score</span>
+          <span class="marquee__item">Tiers</span>
+          <!-- duplicate for seamless loop -->
+          <span class="marquee__item">Streaks</span>
+          <span class="marquee__item">Challenges</span>
+          <span class="marquee__item">CO₂ Saved</span>
+          <span class="marquee__item">Friends</span>
+          <span class="marquee__item">Daily Score</span>
+          <span class="marquee__item">Tiers</span>
+        </div>
+      </div>
+
+      <!-- ===================== HOW IT WORKS (scroll-pinned steps, dark) ===================== -->
+      <section class="band band--house" id="how">
+        <div class="section">
+          <div class="section-head reveal" data-reveal>
+            <span class="eyebrow">The everyday loop</span>
+            <h2 class="display">Small choices, one easy rhythm</h2>
+            <p>No spreadsheets, no guilt — just a simple loop you can keep up with every day.</p>
+          </div>
+
+          <div class="how-grid">
+            <div class="how-media">
+              <div class="how-media-stack">
+                <div class="photo-tile" data-step-media="1">
+                  <img src="https://images.unsplash.com/photo-1764344558503-0579b0b0cb73?auto=format&fit=crop&w=800&q=70" alt="A green city park with the skyline behind it" data-fallback />
+                </div>
+                <div class="photo-tile" data-step-media="2">
+                  <img src="https://images.unsplash.com/photo-1609959368651-1efbbca988ea?auto=format&fit=crop&w=800&q=70" alt="A cyclist riding in a green city bike lane next to a bus" data-fallback />
+                </div>
+                <div class="photo-tile" data-step-media="3">
+                  <img src="https://images.unsplash.com/photo-1503376494496-787b9d78f217?auto=format&fit=crop&w=800&q=70" alt="A person checking their phone with the city skyline behind them" data-fallback />
+                </div>
+                <div class="photo-tile" data-step-media="4">
+                  <img src="https://images.unsplash.com/photo-1779958309246-06dc708e80da?auto=format&fit=crop&w=800&q=70" alt="A green tram on a tree-lined city street" data-fallback />
+                </div>
+              </div>
+            </div>
+
+            <div class="how-steps">
+              <article class="how-step reveal" data-reveal data-step="1">
+                <div class="how-step__num">Step one</div>
+                <h3 class="display">Set your baseline</h3>
+                <p>A quick onboarding learns your normal week, so we can measure everything you save against it.</p>
+              </article>
+              <article class="how-step reveal" data-reveal data-step="2">
+                <div class="how-step__num">Step two</div>
+                <h3 class="display">Track how you move</h3>
+                <p>Logs every train, bike, walk, or car trip, then adds the saved emission.</p>
+              </article>
+              <article class="how-step reveal" data-reveal data-step="3">
+                <div class="how-step__num">Step three</div>
+                <h3 class="display">See your daily score</h3>
+                <p>Each day rolls up into one clear number — and a streak you'll want to keep alive.</p>
+              </article>
+              <article class="how-step reveal" data-reveal data-step="4">
+                <div class="how-step__num">Step four</div>
+                <h3 class="display">Watch it add up</h3>
+                <p>Your saved carbon stacks up against your baseline, week after week, for a greener city.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+        <svg class="wave wave--bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z" fill="#ffffff" />
+        </svg>
+      </section>
+
+      <!-- ===================== DAILY SCORE & STREAKS (light exhale) ===================== -->
+      <section class="band band--white" id="score">
+        <div class="section">
+          <div class="section-head reveal" data-reveal>
+            <span class="eyebrow">Daily score &amp; streaks</span>
+            <h2 class="display">Progress you can feel</h2>
+            <p>The good kind of habit-forming. One score, one streak, one daily goal — that's it.</p>
+          </div>
+          <div class="card-grid">
+            <article class="card reveal" data-reveal>
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+              </div>
+              <span class="big">68</span>
+              <span class="big-sub">today's emission score</span>
+              <p style="margin-top: var(--space-3)">One simple number for the whole day — the lower, the better.</p>
+            </article>
+            <article class="card reveal" data-reveal>
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3c3 3 4 6 1 9 2-1 3 1 3 3a4 4 0 1 1-8 0c0-3 2-4 2-7-2 1-4 0-4-3 2 0 3-2 4-5Z" /></svg>
+              </div>
+              <span class="big">12</span>
+              <span class="big-sub">day streak</span>
+              <p style="margin-top: var(--space-3)">Keep logging to keep the flame alive. Miss a day? Pick it right back up.</p>
+            </article>
+            <article class="card reveal" data-reveal>
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+              </div>
+              <span class="big">Gold</span>
+              <span class="big-sub">your tier this season</span>
+              <p style="margin-top: var(--space-3)">Level up through friendly tiers as your low-carbon days stack up.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== FRIENDS (cream accent) ===================== -->
+      <section class="band band--cream" id="friends">
+        <div class="section">
+          <div class="section-head reveal" data-reveal>
+            <span class="eyebrow">Better with friends</span>
+            <h2 class="display">Lower your footprint together</h2>
+            <p>Add friends with a code, compare friendly weekly scores, and pool what your crew saves.</p>
+          </div>
+          <div class="friends-grid">
+            <div class="leaderboard reveal" data-reveal aria-label="Weekly leaderboard preview">
+              <div class="lb-row">
+                <span class="lb-rank">1</span>
+                <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
+                <span class="lb-name">Maya</span><span class="lb-score">412</span>
+              </div>
+              <div class="lb-row me">
+                <span class="lb-rank">2</span>
+                <span class="lb-avatar">You</span>
+                <span class="lb-name">You</span><span class="lb-score">398</span>
+              </div>
+              <div class="lb-row">
+                <span class="lb-rank">3</span>
+                <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
+                <span class="lb-name">Jordan</span><span class="lb-score">351</span>
+              </div>
+              <div class="lb-row">
+                <span class="lb-rank">4</span>
+                <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
+                <span class="lb-name">Priya</span><span class="lb-score">309</span>
+              </div>
+            </div>
+            <div class="friends-stat reveal" data-reveal>
+              <b>+128 kg</b>
+              <span>CO₂ saved by one friend crew this month</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== CLOSING CTA ===================== -->
+      <section class="band band--accent">
+        <div class="section closing reveal" data-reveal>
+          <h2 class="display">Make the next choice count</h2>
+          <p>
+            cli-MATE keeps climate action friendly, simple, and a little more fun — so an ordinary week
+            turns into a better streak, a lighter footprint, and a greener city.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn--on-dark-fill" href="#join">Join cli-MATE</a>
+            <a class="btn btn--on-dark-outline" href="#friends">Invite friends</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER (giant wordmark) ===================== -->
+    <footer class="footer">
+      <div class="section">
+        <div class="footer-inner">
+          <a class="brand" href="#top" aria-label="cli-MATE home">
+            <span class="brand-mark"><img src="elements/CliMateLogo.png" alt="" /></span>
+            <span class="brand-name">cli-MATE</span>
           </a>
-          <nav class="nav" aria-label="Primary">
-            <a href="#features">What it tracks</a>
-            <a href="#impact">How it works</a>
-            <a href="#social">Friends</a>
-            <a href="#roadmap">Next up</a>
-            <a class="pill" href="#join">Join cli-MATE</a>
+          <nav class="footer-links" aria-label="Footer">
+            <a href="#how">How it works</a>
+            <a href="#score">Your score</a>
+            <a href="#friends">Friends</a>
           </nav>
         </div>
-      </header>
+      </div>
+      <div class="footer-wordmark" aria-hidden="true">cli-MATE</div>
+    </footer>
 
-      <main id="top">
-        <section class="hero reveal" data-reveal>
-          <div class="section hero-grid">
-            <div class="reveal" data-reveal>
-              <div class="eyebrow">Everyday wins for city life</div>
-              <h1>Track your climate wins with friends.</h1>
-              <p class="lead">
-                cli-MATE turns the choices you already make into a social scorecard. Log transit, meals, shopping, and
-                recycling, then watch your crew climb together.
-              </p>
-              <div class="cta-row" id="join">
-                <button class="button primary">Join cli-MATE</button>
-                <button class="button secondary">See scoring</button>
-                <button class="button ghost">Invite friends</button>
-              </div>
-            </div>
-
-            <div class="preview reveal" data-reveal aria-label="App preview panel">
-              <div class="floating-card">
-                <div class="preview-brand">
-                  <img src="elements/CliMateLogo.png" alt="cli-MATE logo" />
-                  <span>cli-MATE</span>
-                </div>
-                <h2>This week’s board</h2>
-                <p>See your progress, your streaks, and how your crew is doing in one place.</p>
-                <div class="mini-grid">
-                  <div class="mini">
-                    <b>24.8 kg</b>
-                    <span>saved by your crew</span>
-                  </div>
-                  <div class="mini">
-                    <b>Bronze → Gold</b>
-                    <span>this week’s tier</span>
-                  </div>
-                  <div class="mini">
-                    <b>7 days</b>
-                    <span>no-car streak</span>
-                  </div>
-                </div>
-              </div>
-              <div class="city" aria-hidden="true"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section reveal" id="impact" data-reveal>
-          <div class="section-header">
-            <div>
-              <h3>Track the habits that add up</h3>
-              <p>cli-MATE keeps it simple, log the choices you already make and watch the good ones stack up.</p>
-            </div>
-          </div>
-          <div class="feature-grid">
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 17a3 3 0 1 0 6 0 3 3 0 0 0-6 0Z" />
-                  <path d="M14 17a3 3 0 1 0 6 0 3 3 0 0 0-6 0Z" />
-                  <path d="M10 6h4l2 4" />
-                  <path d="M8 17 12 6h2" />
-                  <path d="M12 6l-2 4H6" />
-                  <path d="M16 10h-4" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Transportation</h4>
-                <p>Log commute choices in a few taps, from walking and biking to bus, car, rideshare, or flight.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 21c4.5 0 8-3.6 8-8s-3.5-8-8-8-8 3.6-8 8 3.5 8 8 8Z" />
-                  <path d="M8.5 12.5c1.2-2.8 4.3-4.4 7.5-4" />
-                  <path d="M9 15.5c1.7-.1 3.5-.8 5-2.1" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Meals</h4>
-                <p>Keep track of meals with quick logging, barcode scans, or future app connections.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M7 7h10l-1 12H8L7 7Z" />
-                  <path d="M9 7a3 3 0 0 1 6 0" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Shopping</h4>
-                <p>Save your favorite spots, notice patterns, and spot when a lower-impact pick is nearby.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="m7.5 7.5 2-3 1.8 3" />
-                  <path d="m13 6.5 3 .2-1.5 2.6" />
-                  <path d="M6 11a6 6 0 0 1 10.5-3" />
-                  <path d="M17.8 13a6 6 0 0 1-10.6 3" />
-                  <path d="m6.4 14.5-1.2 2.9 3 .1" />
-                  <path d="m18 10.5 1 3-3 .2" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Recycling</h4>
-                <p>A simple check-in for the habits that usually go unseen, recycling, compost, and sorting right.</p>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="band reveal" id="features" data-reveal>
-          <div class="section band-grid">
-            <div class="reveal" data-reveal>
-              <h3>Make climate habits social, not stressful.</h3>
-              <p>
-                cli-MATE blends habit tracking, daily challenges, and friendly competition into one easy flow.
-                It’s built to cheer people on, not make them feel scored by a stranger.
-              </p>
-              <div class="cta-row" style="margin-top: 2.6rem;">
-                <button class="button primary">Start a streak</button>
-                <button class="button secondary">Invite your crew</button>
-              </div>
-            </div>
-            <div class="band-list">
-              <div class="band-item reveal" data-reveal>
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M12 20V10" />
-                    <path d="M12 10c0-3.5 3-6 6-6-1 3-2.4 6-6 6Z" />
-                    <path d="M12 13c-1.8 0-3.3-1-4.2-2.4" />
-                  </svg>
-                </div>
-                <div>
-                  <strong>Daily, weekly, and monthly challenges</strong>
-                  <span>Clear goals that keep you moving without making it feel like homework.</span>
-                </div>
-              </div>
-              <div class="band-item reveal" data-reveal>
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 4h8v4a4 4 0 0 1-8 0V4Z" />
-                    <path d="M10 12v2a2 2 0 0 1-2 2H7" />
-                    <path d="M14 12v2a2 2 0 0 0 2 2h1" />
-                    <path d="M9 20h6" />
-                  </svg>
-                </div>
-                <div>
-                  <strong>Points and tiers</strong>
-                  <span>Rack up points, level up, and unlock better-looking streaks over time.</span>
-                </div>
-              </div>
-              <div class="band-item reveal" data-reveal>
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                    <path d="M16 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                    <path d="M3.5 19c.6-3 2.8-5 5.5-5s4.9 2 5.5 5" />
-                    <path d="M13.5 19c.4-2.2 1.8-3.8 3.8-4.4 1.7.5 2.8 1.8 3.2 4.4" />
-                  </svg>
-                </div>
-                <div>
-                  <strong>Weekly leaderboards</strong>
-                  <span>See how you and your friends are doing and celebrate the wins together.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section reveal" id="social" data-reveal>
-          <div class="section-header">
-            <div>
-              <h3>Made to be shared with friends</h3>
-              <p>From friend codes to challenge invites, cli-MATE keeps the social side light, fun, and easy to join.</p>
-            </div>
-          </div>
-          <div class="roadmap">
-            <article class="section-card reveal" data-reveal>
-              <h4>Getting started</h4>
-              <div class="section-copy">
-                <ul>
-                  <li>Quick intro that explains the vibe in seconds</li>
-                  <li>Light profile setup with location and commute context</li>
-                  <li>Straight into the app without a long setup</li>
-                </ul>
-              </div>
-            </article>
-            <article class="section-card reveal" data-reveal>
-              <h4>Your home screen</h4>
-              <div class="section-copy">
-                <ul>
-                  <li>Your progress, streaks, and next challenge</li>
-                  <li>Daily and weekly goals that stay easy to follow</li>
-                  <li>A quick look at what changed this week</li>
-                </ul>
-              </div>
-            </article>
-            <article class="section-card reveal" data-reveal>
-              <h4>Friends</h4>
-              <div class="section-copy">
-                <ul>
-                  <li>Add friends with a simple code</li>
-                  <li>See who’s on a streak</li>
-                  <li>Invite people into a challenge in one tap</li>
-                </ul>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="section reveal" id="roadmap" data-reveal>
-          <div class="section-header">
-            <div>
-              <h3>What comes next</h3>
-              <p>As cli-MATE grows, it can add smarter features that make everyday sustainable choices even easier.</p>
-            </div>
-          </div>
-          <div class="feature-grid">
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 21s5-5 5-9a5 5 0 0 0-10 0c0 4 5 9 5 9Z" />
-                  <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Nearby green spots</h4>
-                <p>Find thrift shops, compost hubs, recycling drop-offs, and other helpful places near you.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M7 4h10v16l-2-1.5L13 20l-2-1.5L9 20l-2-1.5L5 20V6a2 2 0 0 1 2-2Z" />
-                  <path d="M9 8h6" />
-                  <path d="M9 11h6" />
-                  <path d="M9 14h4" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Receipt scan</h4>
-                <p>Snap a receipt later and let the app help fill in the details for you.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M5 14h14l-1-5H6l-1 5Z" />
-                  <path d="M7 14v2" />
-                  <path d="M17 14v2" />
-                  <path d="M8 16h8" />
-                  <path d="M9 9h6" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Easy app connections</h4>
-                <p>Connect your favorite services so logging feels more automatic over time.</p>
-              </div>
-            </article>
-            <article class="feature-card reveal" data-reveal>
-              <div class="feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="m12 4 2.2 4.5L19 9.2l-3.5 3.4.8 4.9L12 15.2 7.7 17.5l.8-4.9L5 9.2l4.8-.7L12 4Z" />
-                </svg>
-              </div>
-              <div class="feature-copy">
-                <h4>Community picks</h4>
-                <p>See helpful ratings for places people actually go every day.</p>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="closing reveal" data-reveal>
-          <div class="section closing-card">
-            <div class="reveal" data-reveal>
-              <h3>Make the next choice count.</h3>
-              <p>
-                cli-MATE keeps climate action friendly, simple, and a little more fun so your everyday choices can turn into
-                a better streak, a better week, and a better city.
-              </p>
-              <div class="cta-row" style="margin-top: 2.4rem;">
-                <button class="button primary">Get started</button>
-                <button class="button secondary">See challenge ideas</button>
-              </div>
-            </div>
-            <div class="impact-box reveal" data-reveal>
-              <strong>+128 kg</strong>
-              <span>saved by one friend group this month</span>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer">
-        <div class="footer-inner">
-          <div>cli-MATE, friendly climate tracking for everyday city life.</div>
-          <div>Designed to feel light, social, and easy to use.</div>
-        </div>
-      </footer>
-    </div>
-    <script>
-      const revealItems = document.querySelectorAll("[data-reveal]");
-
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            }
-          },
-          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
-        );
-
-        revealItems.forEach((element) => observer.observe(element));
-      } else {
-        revealItems.forEach((element) => element.classList.add("is-visible"));
-      }
-    </script>
+    <script src="js/reveal.js" defer></script>
+    <script src="js/ui.js" defer></script>
   </body>
 </html>
