@@ -66,7 +66,7 @@
               <a class="btn btn--on-dark-outline" href="#score">See how it works</a>
             </div>
             <div class="hero-trust">
-              <div class="stat"><b>4</b><span>ways to get around, tracked</span></div>
+              <div class="stat"><b>Every</b><span>way to get around, tracked</span></div>
               <div class="stat"><b>Daily</b><span>score &amp; streak</span></div>
               <div class="stat"><b>Together</b><span>with your friends</span></div>
             </div>
@@ -190,27 +190,51 @@
             <p>The good kind of habit-forming. One score, one streak, one daily goal — that's it.</p>
           </div>
           <div class="card-grid">
+            <!-- Score: animated progress ring -->
             <article class="card reveal" data-reveal>
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+              <div class="stat-visual">
+                <div class="stat-ring" style="--pct: 84" aria-hidden="true">
+                  <span class="stat-ring__num">68</span>
+                </div>
+                <span class="stat-trend stat-trend--down">▼ 16% vs. your average</span>
               </div>
-              <span class="big">68</span>
               <span class="big-sub">today's emission score</span>
               <p style="margin-top: var(--space-3)">One simple number for the whole day — the lower, the better.</p>
             </article>
+
+            <!-- Streak: day-dot row + flame -->
             <article class="card reveal" data-reveal>
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 3c3 3 4 6 1 9 2-1 3 1 3 3a4 4 0 1 1-8 0c0-3 2-4 2-7-2 1-4 0-4-3 2 0 3-2 4-5Z" /></svg>
+              <div class="stat-visual">
+                <div class="streak-head">
+                  <span class="streak-flame" aria-hidden="true">🔥</span>
+                  <span class="big">12</span>
+                  <span class="streak-unit">days</span>
+                </div>
+                <div class="streak-dots" aria-hidden="true">
+                  <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+                  <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+                  <i class="on"></i><i class="on"></i><i class="on"></i><i class="on today"></i>
+                  <i></i><i></i>
+                </div>
               </div>
-              <span class="big">12</span>
               <span class="big-sub">day streak</span>
               <p style="margin-top: var(--space-3)">Keep logging to keep the flame alive. Miss a day? Pick it right back up.</p>
             </article>
+
+            <!-- Tier: progress ladder -->
             <article class="card reveal" data-reveal>
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+              <div class="stat-visual">
+                <span class="big">Gold</span>
+                <div class="tier-track" aria-hidden="true">
+                  <div class="tier-fill"></div>
+                </div>
+                <div class="tier-labels" aria-hidden="true">
+                  <span class="done">Bronze</span>
+                  <span class="done">Silver</span>
+                  <span class="current">Gold</span>
+                  <span>Platinum</span>
+                </div>
               </div>
-              <span class="big">Gold</span>
               <span class="big-sub">your tier this season</span>
               <p style="margin-top: var(--space-3)">Level up through friendly tiers as your low-carbon days stack up.</p>
             </article>
@@ -231,22 +255,22 @@
               <div class="lb-row">
                 <span class="lb-rank">1</span>
                 <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
-                <span class="lb-name">Maya</span><span class="lb-score">412</span>
+                <span class="lb-name">Maya</span><span class="lb-score">+52 kg</span>
               </div>
               <div class="lb-row me">
                 <span class="lb-rank">2</span>
                 <span class="lb-avatar">You</span>
-                <span class="lb-name">You</span><span class="lb-score">398</span>
+                <span class="lb-name">You</span><span class="lb-score">+48 kg</span>
               </div>
               <div class="lb-row">
                 <span class="lb-rank">3</span>
                 <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
-                <span class="lb-name">Jordan</span><span class="lb-score">351</span>
+                <span class="lb-name">Jordan</span><span class="lb-score">+41 kg</span>
               </div>
               <div class="lb-row">
                 <span class="lb-rank">4</span>
                 <span class="lb-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&h=120&q=70" alt="" data-fallback /></span>
-                <span class="lb-name">Priya</span><span class="lb-score">309</span>
+                <span class="lb-name">Priya</span><span class="lb-score">+36 kg</span>
               </div>
             </div>
             <div class="friends-stat reveal" data-reveal>

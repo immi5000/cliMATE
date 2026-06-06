@@ -1,0 +1,69 @@
+/* cli-MATE design tokens — Starbucks-inspired, eco-forward.
+   Single source of truth for color, type, spacing, radius, elevation.
+   Copied from landing/css/tokens.css so base44 matches the landing page exactly. */
+
+:root {
+  /* ---- Brand greens (deep, genuinely "eco") ---- */
+  --starbucks-green: #006241;   /* h1 / dominant brand signal */
+  --green-accent: #00754a;      /* primary filled CTA, active accents, "today" bar */
+  --house-green: #1e3932;       /* dark page bg + footer */
+  --green-uplift: #2b5148;      /* decorative mid-dark accent */
+  --green-light: #d4e9e2;       /* pale mint utility tint, empty bars, pills */
+
+  /* ---- Warm canvas + surfaces ---- */
+  --cream: #f2f0eb;             /* app canvas */
+  --ceramic: #edebe9;           /* zone separator wash */
+  --white: #ffffff;             /* cards */
+
+  /* ---- Text ---- */
+  --text: rgba(0, 0, 0, 0.87);
+  --text-soft: rgba(0, 0, 0, 0.58);
+  --text-on-dark: #ffffff;
+  --text-on-dark-soft: rgba(255, 255, 255, 0.72);
+
+  /* ---- Ceremony accent (reserve for streak milestones / celebration only) ---- */
+  --gold: #cba258;
+
+  /* ---- Typography ---- */
+  --font-sans: "Manrope", Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Anton", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --tracking: -0.01em;
+  --tracking-caps: 0.015em; /* Anton all-caps needs positive air */
+
+  /* Type scale (1rem = 10px via font-size:62.5% on <html>) */
+  --fs-display: clamp(4.2rem, 6vw, 6.4rem);
+  --fs-h2: clamp(2.8rem, 3.6vw, 4rem);
+  --fs-h3: clamp(2.2rem, 2.6vw, 2.8rem);
+  --fs-h4: 1.9rem;
+  --fs-lead: clamp(1.7rem, 1.9vw, 2rem);
+  --fs-body: 1.6rem;
+  --fs-small: 1.4rem;
+  --fs-micro: 1.3rem;
+
+  /* ---- Spacing scale (8px steps) ---- */
+  --space-1: 0.4rem;
+  --space-2: 0.8rem;
+  --space-3: 1.6rem;
+  --space-4: 2.4rem;
+  --space-5: 3.2rem;
+  --space-6: 4rem;
+  --space-7: 4.8rem;
+  --space-8: 5.6rem;
+  --space-9: 6.4rem;
+
+  /* ---- Geometry ---- */
+  --radius-pill: 999px;
+  --radius-card: 16px;
+  --radius-sm: 10px;
+
+  /* ---- Elevation (whisper-soft, layered) ---- */
+  --shadow-card: 0 1px 2px rgba(15, 40, 30, 0.06), 0 8px 24px rgba(15, 40, 30, 0.06);
+  --shadow-lift: 0 2px 6px rgba(15, 40, 30, 0.08), 0 18px 40px rgba(15, 40, 30, 0.12);
+  --shadow-nav: 0 1px 3px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  /* ---- Standard easing for grow / count-up / bar transitions ---- */
+  --ease-grow: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* NOTE for base44: the landing page anchors 1rem = 10px via `html { font-size: 62.5%; }`.
+   Keep that anchor if you reuse the rem values above, or convert (e.g. --space-3 = 16px). */
