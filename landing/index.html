@@ -80,26 +80,26 @@
                  MUST honor prefers-reduced-motion and fall back to the static card below. -->
             <div
               id="hero-demo"
-              class="hero-demo"
+              class="hero-demo hero-demo--devices"
               role="img"
-              aria-label="cli-MATE app preview: a daily emission score, streak, and carbon saved this week"
+              aria-label="cli-MATE home dashboard shown on iPad and iPhone: a weekly CO2 goal, city clarity, and today's smart swap"
               data-demo-slot
             >
-              <span class="hero-demo__note">Preview</span>
-              <div class="demo-card">
-                <div class="demo-score">
-                  <div class="score-ring" style="--pct: 68">
-                    <span style="text-align: center"><b>68</b><br /><span>today</span></span>
-                  </div>
-                  <div class="meta">
-                    <h4>Daily score</h4>
-                    <p>Lower than 84% of your usual days. Nice one.</p>
-                  </div>
+              <!-- iPad (back) -->
+              <div class="device device--ipad">
+                <div class="device__screen">
+                  <img src="elements/app-home.png" alt="cli-MATE home dashboard on iPad" data-fallback />
+                  <div class="device__fallback" aria-hidden="true">cli-MATE</div>
                 </div>
+                <div class="device__camera" aria-hidden="true"></div>
               </div>
-              <div class="demo-row">
-                <div class="demo-pill"><b>🔥 12</b><span>day streak</span></div>
-                <div class="demo-pill"><b>5.4 kg</b><span>saved this week</span></div>
+              <!-- iPhone (front, overlapping) -->
+              <div class="device device--iphone">
+                <div class="device__screen">
+                  <img src="elements/app-home.png" alt="cli-MATE home dashboard on iPhone" data-fallback />
+                  <div class="device__fallback" aria-hidden="true">cli-MATE</div>
+                </div>
+                <div class="device__island" aria-hidden="true"></div>
               </div>
             </div>
           </div>
